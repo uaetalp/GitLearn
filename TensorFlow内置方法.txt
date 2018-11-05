@@ -1,0 +1,31 @@
+在损失函数loss加入正则化regularization:
+backward中添加:
+ce = tf.nn.sparse_softmax_cross_with_logits(logits=y, labels=tf.argmax(Y_, 1))
+logits是网络预测输出，labels是实际标签，此语句计算稀疏softmax交叉熵值
+cem = tf.reduce_mean(ce)
+这一步操作求平均值
+loss = cem+tf.add_n(tf.get_collection('losses'))
+tf.add_n将所有相同形状的元素添加到一起，还可以有一个可选的name参数，表示这次操作的名字
+'losses'是一个集合名称，get_collection操作将一个集合中的变量都取出，形成一个列表, 这里指的是在权重W上的L2正则项的loss值
+losses+cem,loss代表添加过L2正则项的误差值
+
+
+forward中添加：
+if regularizer ！= None：tf.add_to_collection('losses', tf.contrib.layers.l2_regularizer(regularizer)(w)
+
+tf.add_to_collection:把变量放入一个集合，组成一个列表
+tf.contrib.layers.l2_regularizer返回可用于将L2正则化应用于权重的函数
+
+
+
+自适应学习率Learning_rate:
+backward中添加:
+learning_rate = tf.train.exponential_decay(learning_rate_base, global_step, decay_steps,                                         decay_rate, staircase=True)
+参数分别为：基础学习率，当前训练步数，更新间隔，更新率，是否梯式下降
+
+
+滑动平均MovingAverage:
+backward中添加:
+ema = tf.train.ExponentialMovingAverage(moving_average_decay, global_step)
+ema_op = ema.apply(tf.trainable_variables())
+参数分别为：更新率，当前训练步数
