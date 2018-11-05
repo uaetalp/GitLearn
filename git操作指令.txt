@@ -3,7 +3,7 @@ git commit -m ""----------对进行的修改进行注释
 git status-------------查看当前工作区的状态
 git diff---------------查看修改内容
 git log----------------查看修改记录
-git log --pretty=onelin---将一次修改记录信息写成一行
+git log --pretty=oneline---将一次修改记录信息写成一行
 git reset --hard HEAD^n---回退到n个版本之前
 cat xxxx---------------查看内容
 git reflog-------------查看历史命令
