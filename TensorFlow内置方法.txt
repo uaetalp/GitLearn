@@ -20,7 +20,7 @@ tf.contrib.layers.l2_regularizer返回可用于将L2正则化应用于权重的�
 
 自适应学习率Learning_rate:
 backward中添加:
-learning_rate = tf.train.exponential_decay(learning_rate_base, global_step, decay_steps,                                         decay_rate, staircase=True)
+learning_rate = tf.train.exponential_decay(learning_rate_base, global_step, decay_steps,decay_rate, staircase=True)
 参数分别为：基础学习率，当前训练步数，更新间隔，更新率，是否梯式下降
 
 
